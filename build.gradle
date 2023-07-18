@@ -1,14 +1,17 @@
 plugins {
-	id 'org.springframework.boot' version '2.3.6.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'org.springframework.boot' version '2.7.13'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id 'java'
 	id 'war'
-        id 'eclipse-wtp'
+	id 'eclipse-wtp'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+
+java {
+	sourceCompatibility = '11'
+}
 
 repositories {
 	mavenCentral()
@@ -17,16 +20,14 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation("org.apache.tomcat.embed:tomcat-embed-jasper")
+	implementation("javax.servlet:jstl")
+	implementation("com.stimulsoft:stimulsoft-reports-libs:2023.2.8") {
+	  exclude group: 'xml-apis', module: 'xml-apis'
 	}
-        implementation("org.apache.tomcat.embed:tomcat-embed-jasper")
-        implementation("javax.servlet:jstl")
-        implementation("com.stimulsoft:stimulsoft-reports-libs:2020.5.1") {
-          exclude group: 'xml-apis', module: 'xml-apis'
-        }
 }
 
-test {
+tasks.named('test') {
 	useJUnitPlatform()
 }
